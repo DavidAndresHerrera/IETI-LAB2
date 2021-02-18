@@ -1,14 +1,20 @@
 import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import moment from "moment";
 import {Login} from './components/Login.js';
 import {TodoApp} from "./components/TodoApp.js";
 import {BrowserRouter as Router, Link, Route} from 'react-router-dom'
 
+
 class App extends Component {
+
+
+    constructor(props) {
+        super(props);
+        localStorage.setItem('email',"davidandres@gmail.com");
+        localStorage.setItem('password',"123456");
+    }
 
     render() {
 
@@ -32,13 +38,13 @@ class App extends Component {
                     <br/>
 
                     <ul>
-                        <li><Link to="/">Login</Link></li>
-                        <li><Link to="/todo">Todo</Link></li>
+                        {localStorage.getItem('IsLoggedIn') === "true"?
+                        <li><Link to="/todo">Todo</Link></li> : <li><Link to="/">Login</Link></li>}
                     </ul>
 
                     <div>
-                        <Route exact path="/" component={LoginView}/>
-                        <Route path="/todo" component={TodoAppView}/>
+                        {localStorage.getItem('IsLoggedIn') === "true"?
+                            <Route path="/todo" component={TodoAppView}/> : <Route exact path="/" component={LoginView}/>}
                     </div>
                 </div>
             </Router>
